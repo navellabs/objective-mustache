@@ -11,6 +11,25 @@
 @end
 
 
+@interface TestObjectiveMustacheKVCObject : NSObject {
+}
+
+// This should be accessible via Key Value Coding
+// i.e. [obj valueForKey:@"replace_me"];
+- (NSString *)replace_me;
+
+@end
+
+@implementation TestObjectiveMustacheKVCObject
+
+- (NSString *)replace_me
+{
+    return @"replaced by KVC result!";
+}
+
+@end
+
+
 @implementation NLObjectiveMustacheTest
 
 
@@ -123,6 +142,16 @@
     NSDictionary *view = DICT(@"<>&", @"no_escape");
     NSString *result = [NLObjectiveMustache stringFromTemplate:template view:view];
     STAssertEqualObjects(result, @"<>&", nil);
+}
+
+
+- (void)testViewObjectThatIsNotADictionaryButSupportsKeyValueCoding
+{
+    NSString *template = @"{{replace_me}}";
+    TestObjectiveMustacheKVCObject *view = [[TestObjectiveMustacheKVCObject alloc] init];
+    NSString *result = [NLObjectiveMustache stringFromTemplate:template view:view];
+    STAssertEqualObjects(result, @"replaced by KVC result!", nil);
+    [view release];
 }
 
 
