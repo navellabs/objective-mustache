@@ -1,0 +1,111 @@
+Objective Mustache
+==================
+
+An Objective C implementation of the Mustache template language. Based on the
+[Ruby implementation][mustache-rb] and inspired by [ctemplate][] and [et][],
+Mustache is a framework-agnostic way to render logic-free views.
+
+I use this to help quickly generate html fed to the UIWebView control.
+UIWebView is a great way to have nicely formatted content on the iPhone/iPad
+without having to mess with UILabels and positioning. Just code up the
+HTML/CSS, feed it to UIWebView, and off you go!
+
+It's only a subset of standard Mustache features for now. Feel free to fork
+and improve!!
+
+
+## Overview ##
+
+Mustache templates consist of two parts, a template with "tags" and a view
+object that has keys (using KVC) that match those tags. The templates are
+almost completely devoid of logic. All the data that is used to populate the
+template either must be calculated by the view or stored using KVC in the
+view.
+
+
+## Usage ##
+
+The simplest view for Objective C is an instance `NSDictionary`.
+
+    NSDictionary *view = [NSDictionary dictionaryWithObjectsAndKeys:
+        @"James", @"firstName",
+        @"Kirk", @"lastName",
+        nil];
+    NSString *template = @"Hello. My name is {{firstName}} {{lastName}}";
+    NSString *result = [NLObjectiveMustache stringFromTemplate:template view:view];
+
+    // result == @"Hello. My name is James Kirk"
+
+A template is composed of tags delimited by double braces. Inside the braces
+are keys that get looked up in the view object using
+`valueForKey:(NSString *)`.
+
+If a key referenced by a tag is missing, then the tag is just ignored. As long
+as the view object returns nil for that key. `NSDictionary` works great for
+this because it returns nil for any key that it doesn't know about.
+
+
+## Syntax ##
+
+
+### Conditionals ###
+
+Right now, the only bit of control flow in a template is a conditional
+section. You prefix the opening tag with `#` and the closing tag with `/`. The
+section is rendered if that key returns anything non-nil.
+
+    {{#shouldRenderGreeting}}
+        Hello, my name is {{first_name}} {{last_name}}
+    {{/shouldRenderGreeting}}
+
+There's no else. No expressions.
+
+### Escaping ###
+
+By default, `ObjectiveMustache` HTML escapes everything interpolated. If you
+want to stop that from happening, use three braces like so:
+
+    {{{dontEscapeMe}}}
+
+
+### Missing keys ###
+
+If a key returns nil, then the view just ignores the tag. `NSDictionary` works
+great for a view in this case because if a key wasn't set on it, it just
+returns nil. If you pass in your own custom object as a view, then you'll
+either need to ensure that every key asked for returns nil, or override the
+Key Value Code methods to return nil on any unknown key.
+
+
+## License ##
+
+Released under the [MIT License][mitlicense]
+
+Copyright (c) 2010 Navel Labs, Ltd.
+
+ Permission is hereby granted, free of charge, to any person
+ obtaining a copy of this software and associated documentation
+ files (the "Software"), to deal in the Software without
+ restriction, including without limitation the rights to use,
+ copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following
+ conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+
+  [mustache-rb]: http://github.com/defunkt/mustache
+  [ctemplate]: http://code.google.com/p/google-ctemplate/
+  [et]: http://www.ivan.fomichev.name/2008/05/erlang-template-engine-prototype.html
+  [mitlicense]: http://en.wikipedia.org/wiki/MIT_License
+
