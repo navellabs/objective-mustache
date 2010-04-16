@@ -76,7 +76,8 @@ on it, it just returns nil. If you pass in your own custom object as a view,
 then you'll either need to ensure that every key asked for returns nil, or
 override the Key Value Coding methods to return nil on any unknown key.
 
-Because of the magic of Key Value Coding, any methods you define on your custom object automatically become keys.
+Because of the magic of Key Value Coding, any methods you define on your custom
+object automatically become keys.
 
     @implementation CustomViewObject
 
@@ -88,6 +89,13 @@ Because of the magic of Key Value Coding, any methods you define on your custom 
     }
 
     @end
+
+
+## Running the tests ##
+
+The unit test is written using the SenTestingKit framework and the project in
+the repo is set up with the unit testing target. Fire up Xcode and compile it,
+or just run `make` at the terminal to run the suite.
 
 
 ## License ##
