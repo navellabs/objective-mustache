@@ -114,7 +114,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 }
 
 
-- (NSString *)renderWithView:(NSDictionary *)view
+- (NSString *)renderWithView:(id)view
 {
     self.results = [NSMutableString stringWithCapacity:500];
     self.context = view;
@@ -139,7 +139,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 }
 
 
-+ (NSString *)stringFromTemplate:(NSString *)template view:(NSDictionary *)view
++ (NSString *)stringFromTemplate:(NSString *)template view:(id)view
 {
     NLObjectiveMustache *mustache = [[NLObjectiveMustache alloc] init];
     mustache.template = template;
@@ -149,7 +149,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 }
 
 
-+ (NSString *)stringFromTemplateNamed:(NSString *)templateName view:(NSDictionary *)view
++ (NSString *)stringFromTemplateNamed:(NSString *)templateName view:(id)view
 {
     NSError *error;
     NSString *filePath = [[NSBundle mainBundle] pathForResource:templateName ofType:@"mustache"];

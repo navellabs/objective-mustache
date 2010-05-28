@@ -34,10 +34,10 @@ OTHER DEALINGS IN THE SOFTWARE.
     NSDictionary *context;
 }
 
-+ (NSString *)stringFromTemplate:(NSString *)template view:(NSDictionary *)view;
-+ (NSString *)stringFromTemplateNamed:(NSString *)templateName view:(NSDictionary *)view;
++ (NSString *)stringFromTemplate:(NSString *)template view:(id)view;
++ (NSString *)stringFromTemplateNamed:(NSString *)templateName view:(id)view;
 
-- (NSString *)renderWithView:(NSDictionary *)view;
+- (NSString *)renderWithView:(id)view;
 
 @property (nonatomic, retain) NSString *template;
 @property (nonatomic, retain) NSScanner *scanner;
