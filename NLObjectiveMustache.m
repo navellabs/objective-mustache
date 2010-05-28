@@ -126,11 +126,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
         [self scanToNextInterpolation];
 
-        if ([scanner isAtEnd]) {
-            continue;
+        if (![scanner isAtEnd]) {
+            [self processSigil];
         }
-
-        [self processSigil];
 
         [pool drain];
     }
