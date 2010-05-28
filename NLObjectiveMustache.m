@@ -56,13 +56,26 @@
 
 
 
-- (NSString *)escape:(NSString *)string
++ (NSString *)escape:(NSString *)string
 {
     NSString *result = [string stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
     result = [result stringByReplacingOccurrencesOfString:@"<" withString:@"&lt;"];
     result = [result stringByReplacingOccurrencesOfString:@">" withString:@"&gt;"];
     result = [result stringByReplacingOccurrencesOfString:@"\"" withString:@"&quot;"];
     return result;
+}
+
+
++ (NSString *)escapeAndLineBreak:(NSString *)string
+{
+    NSString *result = [self escape:string];
+    return [result stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+}
+
+
+- (NSString *)escape:(NSString *)string
+{
+    return [[self class] escape:string];
 }
 
 

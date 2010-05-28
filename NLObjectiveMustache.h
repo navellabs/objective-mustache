@@ -36,6 +36,8 @@
 
 + (NSString *)stringFromTemplate:(NSString *)template view:(id)view;
 + (NSString *)stringFromTemplateNamed:(NSString *)templateName view:(id)view;
++ (NSString *)escape:(NSString *)string;
++ (NSString *)escapeAndLineBreak:(NSString *)string;
 
 - (NSString *)renderWithView:(id)view;
 
